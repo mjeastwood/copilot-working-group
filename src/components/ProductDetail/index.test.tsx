@@ -32,7 +32,7 @@ const mockProduct: Product = {
 };
 
 // Helper function to render component with all necessary providers
-const renderProductDetail = (productId: string = '1', productData?: Product | null, isLoading = false, isError = false) => {
+const renderProductDetail = (productId: string = '1', productData?: Product | null, isError = false) => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -227,7 +227,7 @@ describe('ProductDetail Component', () => {
     it('should handle network error gracefully', async () => {
       // This test verifies the component doesn't crash on error
       // The actual error handling UI would depend on implementation
-      renderProductDetail('1', undefined, false, true);
+      renderProductDetail('1', undefined, true);
 
       // Component should render its structure even with error
       await waitFor(() => {
