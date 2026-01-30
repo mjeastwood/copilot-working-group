@@ -300,6 +300,41 @@ describe('ProductDetail Component', () => {
         expect(heading).toHaveTextContent('Test Product');
       });
     });
+
+    it('should have semantic navigation link', async () => {
+      renderProductDetail();
+
+      await waitFor(() => {
+        const link = screen.getByRole('link', { name: /back to products/i });
+        expect(link).toBeInTheDocument();
+        expect(link).toHaveAttribute('href', '/');
+      });
+    });
+
+    it('should have accessible price information', async () => {
+      renderProductDetail();
+
+      await waitFor(() => {
+        // Price should be text content, accessible to screen readers
+        const price = screen.getByText('$99.99');
+        expect(price).toBeInTheDocument();
+      });
+    });
+
+    it('should have descriptive text for screen readers', async () => {
+      renderProductDetail();
+
+      await waitFor(() => {
+        // Product description should be accessible
+        const description = screen.getByText('This is a test product description');
+        expect(description).toBeInTheDocument();
+        
+        // All product metadata should be present
+        expect(screen.getByText('Test Brand')).toBeInTheDocument();
+        expect(screen.getByText('electronics')).toBeInTheDocument();
+        expect(screen.getByText('10')).toBeInTheDocument(); // stock
+      });
+    });
   });
 
   describe('Props updates and re-rendering', () => {
